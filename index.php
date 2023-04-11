@@ -7,7 +7,8 @@
   <title>What's the current day number?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,30,550&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet"> -->
   <!-- <link href="/css/pico.min.css" rel="stylesheet"> -->
   <style>
     html {
@@ -15,7 +16,7 @@
       padding:0;
       /* background: #233400; */
       color:#FFF;
-      font-family: 'Oswald', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      font-family: 'Roboto Flex', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     }
     body {
       margin:0;
@@ -50,58 +51,49 @@
 <div class="grid">
   <div>
     <h1 id="output"></h1>
+    <!-- <p id="today"></p> -->
   </div>
 </div>
 </body>
 <script>
-// generated with Chat GPT on 2023-01-07
-// get the current date and time
-const now = new Date();
+// generated with Chat GPT on 2023-04-10
+// create a new Date object with the current date and time
+const today = new Date();
 
-// get the timezone offset in minutes
-const timezoneOffset = now.getTimezoneOffset();
+// get the day of the year by calculating the difference in days
+// between the current date and the start of the year
+const startOfYear = new Date(today.getFullYear(), 0, 0);
+const diff = today - startOfYear + ((startOfYear.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
+const oneDay = 1000 * 60 * 60 * 24;
+const dayOfYear = Math.floor(diff / oneDay);
+var dd = String(today.getDate()).padStart(2, '0');
 
-// calculate the local time by adding the offset to UTC time
-const localTime = new Date(now.getTime() - timezoneOffset * 60000);
 
-// check if DST is in effect for the local time
-const isDST = localTime.getTimezoneOffset() < timezoneOffset;
+// TEST FOR LEAP YEARS, 
+// var now = new Date();
+// var start = new Date(now.getFullYear(), 0, 0);
+// var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+// var oneDay = 1000 * 60 * 60 * 24;
+// var day = Math.floor(diff / oneDay);
+// console.log('Day of year: ' + day);
 
-// get the day of the year
-const startOfYear = new Date(localTime.getFullYear(), 0, 0);
-const diff = localTime - startOfYear;
-const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+
 
 // determine the suffix for the day of the year
 let suffix;
-if (dayOfYear % 10 === 1 && dayOfYear !== 11) {
+if (dayOfYear % 10 === 1 && dayOfYear % 100 !== 11) {
   suffix = "st";
-} else if (dayOfYear % 10 === 2 && dayOfYear !== 12) {
+} else if (dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) {
   suffix = "nd";
-} else if (dayOfYear % 10 === 3 && dayOfYear !== 13) {
+} else if (dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) {
   suffix = "rd";
 } else {
   suffix = "th";
 }
 
-// display the day of the year with suffix
-const output = document.getElementById("output");
-output.textContent = `Today is the ${dayOfYear}${suffix} day of the year${isDST ? ' (DST)' : ''}.`;
-
-// document.write("Today is day " + (dayOfYear + 1) + " of " + year + " in your timezone.");
-// document.getElementById("boo").innerHTML = (dayOfYear + 1 + suffix);
-
-// convert the day of the year to a hexadecimal value
-const hexValue = dayOfYear.toString(16);
-
-// pad the hexadecimal value with leading zeros if necessary
-const paddedHexValue = hexValue.padStart(3, "0");
-
-// generate a hex code based on the hexadecimal value
-const hexCode = "#" + paddedHexValue;
-
-// set the background color to the generated hex code
-document.body.style.backgroundColor = hexCode;
+// display the day of the year with the suffix
+document.getElementById("output").innerHTML = `Today is day ${dayOfYear}${suffix} of the year.`;
+document.getElementById("today").innerHTML  = `${dd}`;
 
 </script>
 </html>
