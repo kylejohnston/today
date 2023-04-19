@@ -3,48 +3,18 @@
 
 ## Getting Started
 
-### Installation
+## Installation
 
 * No packages to install, no build step, no dependencies. Simple.
-
-## Usage
 
 ## Deployment
 
 * Host the HTML file with your favorite webhost or run it in a local environment.
 
-### Server
-
-* Live:
-* Staging:
-* Development:
-
-### Branches
-
-* Master:
-* Feature:
-* Bugfix:
-* etc...
-
-```sh
-npm run build
-```
-
-## Additional Documentation
-
-* Project folder on server: …
-* Confluence link: …
-* Slack project channel: …
-* etc...
-
 ## Changelog
-
-We use [Semantic Versioning](http://semver.org/) for versioning.
 
 * 0.1.0
     * The first proper release
-
-## Roadmap
 
 ## Author
 
