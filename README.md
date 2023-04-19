@@ -18,7 +18,7 @@
 
 ## Author
 
-* **Kyle Johnston** [GitHub](https://github.com/kylejohnston/) · [Portfolio](https://www.kylewjohnston.com)
+* **Kyle Johnston** · [GitHub](https://github.com/kylejohnston/) · [Portfolio](https://www.kylewjohnston.com)
 
 ## Contributing
 
