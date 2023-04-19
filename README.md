@@ -3,13 +3,9 @@
 
 ## Getting Started
 
-### Prerequisites and Main Dependencies
-
-* No packages to install, no build step, simple.
-
 ### Installation
 
-* No dependencies
+* No packages to install, no build step, no dependencies. Simple.
 
 ## Usage
 
