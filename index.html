@@ -6,10 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#ffe7d3">
   <title>What's the current day number?</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Roboto+Flex:opsz,wdth,wght@8..144,50,700&display=swap" rel="stylesheet">
 	<style>
+			@font-face {
+				font-family: 'Akkurat Mono';
+				src:
+					url('fonts/AkkuratMono-Regular.woff') format('woff'),
+					url('fonts/AkkuratMono-Regular.ttf') format('truetype'),
+					url('fonts/AkkuratMono-Regular.svg#AkkuratMonoRegular') format('svg');
+			}
+			@font-face {
+				font-family: 'Akkurat';
+				src:
+					url('fonts/Akkurat-Regular.woff') format('woff'),
+					url('fonts/Akkurat-Regular.ttf') format('truetype'),
+					url('fonts/Akkurat-Regular.svg#AkkuratRegular') format('svg');
+			}
 		:root {
 			--orange-50:  #fff4ec;
 			--orange-100: #ffe7d3;
@@ -31,19 +42,25 @@
 					0 8px 16px  hsl(var(--shadow-color) / var(--shadow-opacity)),
 					0 16px 32px hsl(var(--shadow-color) / var(--shadow-opacity)),
 					0 32px 64px hsl(var(--shadow-color) / var(--shadow-opacity));
-			--text: 'IBM Plex Mono', mono;
+
+			--text: 'Akkurat', Georgia, sans-serif;
+			--mono: 'Akkurat Mono', Georgia, sans-serif;
 			--text-weight: 500;
+
+			--fluid-type-min:    1.625rem;
+			--fluid-type-target: 5rem;
+			--fluid-type-max:    2vw;
 			}
 			html {
-				margin:0 1rem 1rem 1rem;
+				margin: 0 1rem;
 				padding:0;
-				font-family: 'Roboto Flex', 'IBM Plex Mono', sans-serif;
+				font-family: var(--text);
 				background: 
 					linear-gradient(to top right, var(--orange-200), transparent),
 					linear-gradient(to bottom left, var(--orange-100), transparent);
 			}
 			body { margin:0; padding: 0; border-radius: 1rem; }
-			a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .5rem 1rem; text-decoration:none; border-radius:999px; }
+			a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .7rem 1rem .5rem 1rem; text-decoration:none; border-radius:999px; }
 			a:hover, a:active { color: var(--orange-200); border-color: #00F; background: #00f; }
 			.grid { display: grid; margin:1rem; }
 			.card {
@@ -62,26 +79,35 @@
 				padding:2rem 0;
 			}
 			h1 { 
-				padding:18px 0;
+				margin: 0;
+				/* padding: 18px 0; */
 				font-family: var(--text);
 				font-weight: var(--text-weight);
-				font-size: clamp(1rem, 0.6365rem + 1.82vw, 2rem);
+				font-size: clamp(
+					var(--fluid-type-min, 1rem),
+					calc(1rem + var(--fluid-type-target, 3vw)),
+					var(--fluid-type-max, 1.3rem)
+				);
 				line-height: 1.2;
-				margin: 0;
 			}
 			#today { 
-				font-family: 'Roboto Flex', sans-serif;
-				font-weight: 800;
-				font-size: 4.6875em;
+				margin-top: 0.8rem;
+				margin-bottom: -0.4rem;
+				font-family: var(--mono);
+				font-weight: var(--text-weight);
+				font-size: 6.5em;
+				letter-spacing: -4px;
 			}
-			small { margin-left: 6px; font-size: 4rem; }
+			small { margin-left: 3px; font-size: 2.5rem; }
 			p {
+				line-height: 1;
 				font-size: .875rem;
 				text-transform: uppercase;
 				color: var(--orange-500);
-				font-family: var(--text);
+				font-family: var(--mono);
 				font-weight: var(--text-weight);
 			}
+			p#date { margin-top: 3rem; }
 		@media (min-width:768px) {
 				.content { margin: 4.5rem; }
 				.credits { margin-left: 4.35rem; }
@@ -91,7 +117,10 @@
 <body>
 	<div class="grid card text-color">
 		<div class="grid content">
-			<h1>today is the <div id="today"></div> day of the year</h1>
+			<h1>today is the</h1>
+			<h1 id="today"></h1>
+			<h1>day of the year</h1>
+			<!-- <h1 style="text-transform: uppercase;">today is the <div id="today"></div> day of the year</h1> -->
 			<p id="date"></p>
 		</div>
 	</div>
