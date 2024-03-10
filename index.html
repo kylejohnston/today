@@ -65,6 +65,12 @@
 				padding: 0;
 				text-align: center;
 			 }
+			.mainLayout {
+				display: flex;
+				flex-direction: column;
+				justify-content:space-between;
+				height: calc(100dvh - 2em); /* account for the margin */
+			}
 			a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .7rem 1rem .5rem 1rem; text-decoration:none; border-radius:999px; }
 			a:hover, a:active { color: var(--orange-200); border-color: #00F; background: #00f; }
 			.text-color { color: var(--orange-600); }
@@ -85,8 +91,8 @@
 				line-height: 1;
 				font-family: var(--text);
 				font-weight: var(--text-weight);
-				font-size: 48vw;
-				letter-spacing: -1.2rem;
+				font-size: 50dvw;
+				letter-spacing: -0.6rem;
 				display: flex;
 				grid-gap: 1rem;
 				justify-content: center;
@@ -118,15 +124,21 @@
 		</style>
 </head>
 <body class="text-color">
-	<h1>today is the</h1>
-	<h1 id="today"></h1>
-	<h1 class="nudge">day of the year</h1>
-	<p id="date"></p>
-	<div class="credits">
-		<p>
-			<a href="https://www.kylewjohnston.com">Credits</a> <a href="https://github.com/kylejohnston/today/">Code</a>
-		</p>
+<div class="mainLayout">
+	<div>
+		<h1>today is the</h1>
+		<h1 id="today"></h1>
+		<h1 class="nudge">day of the year</h1>
 	</div>
+	<div>
+		<p id="date"></p>
+		<div class="credits">
+			<p>
+				<a href="https://www.kylewjohnston.com">Credits</a> <a href="https://github.com/kylejohnston/today/">Code</a>
+			</p>
+		</div>
+	</div>
+</div>
 </body>
 
 <script>
