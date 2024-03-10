@@ -33,15 +33,6 @@
 			--orange-800: #a11b0b;
 			--orange-900: #82190c;
 			--orange-950: #460904;
-			--shadow-color: 19deg 100% 60%;
-			--shadow-opacity: 0.12;
-			--shadow-soft:
-					0 1px 2px   hsl(var(--shadow-color) / var(--shadow-opacity)), 
-					0 2px 4px   hsl(var(--shadow-color) / var(--shadow-opacity)), 
-					0 4px 8px   hsl(var(--shadow-color) / var(--shadow-opacity)), 
-					0 8px 16px  hsl(var(--shadow-color) / var(--shadow-opacity)),
-					0 16px 32px hsl(var(--shadow-color) / var(--shadow-opacity)),
-					0 32px 64px hsl(var(--shadow-color) / var(--shadow-opacity));
 
 			--text: 'Akkurat', Georgia, sans-serif;
 			--mono: 'Akkurat Mono', Georgia, sans-serif;
@@ -53,12 +44,11 @@
 				box-sizing: border-box;
 			}
 			html {
-				margin: 0 1rem;
+				margin: 0;
 				padding:0;
 				font-family: var(--text);
-				background: 
-					linear-gradient(to top right, var(--orange-200), transparent),
-					linear-gradient(to bottom left, var(--orange-100), transparent);
+				background:
+					linear-gradient(130deg, var(--orange-50), var(--orange-200));
 			}
 			body {
 				margin: 2rem 0;
@@ -91,7 +81,7 @@
 				line-height: 1;
 				font-family: var(--text);
 				font-weight: var(--text-weight);
-				font-size: 50dvw;
+				font-size: 44dvw;
 				letter-spacing: -0.6rem;
 				display: flex;
 				grid-gap: 1rem;
@@ -107,7 +97,7 @@
 			}
 			.nudge { 
 				position: relative;
-				top: -0.94em;
+				top: -0.84em;
 			}
 			p {
 				margin: 0;
@@ -119,7 +109,13 @@
 				font-weight: var(--text-weight);
 			}
 		@media (width<=768px) {
+			/* mobile styles */
 			p#date { margin-top: 3rem; }
+			#today { font-size: 50dvw; }
+			.nudge { 
+				position: relative;
+				top: -0.94em;
+			}
 		}
 		</style>
 </head>
