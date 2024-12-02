@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#ffe7d3">
-  <title>What's the current day number?</title>
+	<title>What's the current day number?</title>
 	<style>
-			@font-face {
-				font-family: 'Akkurat Mono';
-				src:
-					url('fonts/AkkuratMono-Regular.woff') format('woff'),
-					url('fonts/AkkuratMono-Regular.ttf') format('truetype'),
-					url('fonts/AkkuratMono-Regular.svg#AkkuratMonoRegular') format('svg');
-			}
-			@font-face {
-				font-family: 'Akkurat';
-				src:
-					url('fonts/Akkurat-Regular.woff') format('woff'),
-					url('fonts/Akkurat-Regular.ttf') format('truetype'),
-					url('fonts/Akkurat-Regular.svg#AkkuratRegular') format('svg');
-			}
+		@font-face {
+			font-family: 'Akkurat Mono';
+			src:
+			url('fonts/AkkuratMono-Regular.woff') format('woff'),
+			url('fonts/AkkuratMono-Regular.ttf') format('truetype'),
+			url('fonts/AkkuratMono-Regular.svg#AkkuratMonoRegular') format('svg');
+		}
+		@font-face {
+			font-family: 'Akkurat';
+			src:
+			url('fonts/Akkurat-Regular.woff') format('woff'),
+			url('fonts/Akkurat-Regular.ttf') format('truetype'),
+			url('fonts/Akkurat-Regular.svg#AkkuratRegular') format('svg');
+		}
 		:root {
 			--orange-50:  #fff4ec;
 			--orange-100: #ffe7d3;
@@ -33,81 +33,81 @@
 			--orange-800: #a11b0b;
 			--orange-900: #82190c;
 			--orange-950: #460904;
-
+			
 			--text: 'Akkurat', Georgia, sans-serif;
 			--mono: 'Akkurat Mono', Georgia, sans-serif;
 			--text-weight: 500;
-
+			
 			--font-size: 6vw;
-			}
-			*, *::before, *::after {
-				box-sizing: border-box;
-			}
-			html {
-				margin: 0;
-				padding:0;
-				font-family: var(--text);
-				background:
-					linear-gradient(130deg, var(--orange-50), var(--orange-200));
-			}
-			body {
-				margin: 2rem 0;
-				padding: 0;
-				text-align: center;
-			 }
-			.mainLayout {
-				display: flex;
-				flex-direction: column;
-				justify-content:space-between;
-				height: calc(100dvh - 2em); /* account for the margin */
-			}
-			a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .7rem 1rem .5rem 1rem; text-decoration:none; border-radius:999px; }
-			a:hover, a:active { color: var(--orange-200); border-color: #00F; background: #00f; }
-			.text-color { color: var(--orange-600); }
-			.credits {
-				padding:2rem 0;
-			}
-			h1 { 
-				/* today is the… day of the year */
-				margin: 0;
-				line-height: 1;
-				text-transform: uppercase;
-				font-family: var(--text);
-				font-weight: var(--text-weight);
-				font-size:   var(--font-size);
-			}
-			#today { 
-				margin: 0;
-				line-height: 1;
-				font-family: var(--mono);
-				font-weight: var(--text-weight);
-				font-size: 40vmin;
-				letter-spacing: -1rem;
-				display: flex;
-				grid-gap: 1rem;
-				justify-content: center;
-				align-items: center;
-			}
-			small { 
-				position: relative;
-				top: -1rem;
-				margin-left: 3px;
-				font-size: 18vmin;
-				letter-spacing: 0;
-			}
-			.nudge { 
-				position: relative;
-				top: -0.44em;
-			}
-			p {
-				margin: 0;
-				line-height: 1;
-				font-size: 1rem;
-				text-transform: uppercase;
-				color: var(--orange-500);
-				font-family: var(--text);
-				font-weight: var(--text-weight);
-			}
+		}
+		*, *::before, *::after {
+			box-sizing: border-box;
+		}
+		html {
+			margin: 0;
+			padding:0;
+			font-family: var(--text);
+			background:
+			linear-gradient(130deg, var(--orange-50), var(--orange-200));
+		}
+		body {
+			margin: 2rem 0;
+			padding: 0;
+			text-align: center;
+		}
+		.mainLayout {
+			display: flex;
+			flex-direction: column;
+			justify-content:space-between;
+			height: calc(100dvh - 2em); /* account for the margin */
+		}
+		a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .7rem 1rem .5rem 1rem; text-decoration:none; border-radius:999px; }
+		a:hover, a:active { color: var(--orange-200); border-color: #00F; background: #00f; }
+		.text-color { color: var(--orange-600); }
+		.credits {
+			padding:2rem 0;
+		}
+		h1 { 
+			/* today is the… day of the year */
+			margin: 0;
+			line-height: 1;
+			text-transform: uppercase;
+			font-family: var(--text);
+			font-weight: var(--text-weight);
+			font-size:   var(--font-size);
+		}
+		#today { 
+			margin: 0;
+			line-height: 1;
+			font-family: var(--mono);
+			font-weight: var(--text-weight);
+			font-size: 40vmin;
+			letter-spacing: -1rem;
+			display: flex;
+			grid-gap: 1rem;
+			justify-content: center;
+			align-items: center;
+		}
+		small { 
+			position: relative;
+			top: -1rem;
+			margin-left: 3px;
+			font-size: 18vmin;
+			letter-spacing: 0;
+		}
+		.nudge { 
+			position: relative;
+			top: -0.44em;
+		}
+		p {
+			margin: 0;
+			line-height: 1;
+			font-size: 1rem;
+			text-transform: uppercase;
+			color: var(--orange-500);
+			font-family: var(--text);
+			font-weight: var(--text-weight);
+		}
 		@media (width<=768px) {
 			/* mobile styles */
 			p#date { margin-top: 3rem; }
@@ -119,45 +119,74 @@
 				top: -0.94em;
 			}
 		}
-		</style>
+	</style>
 </head>
 <body class="text-color">
-<div class="mainLayout">
-	<div>
-		<h1>today is the</h1>
-		<h1 id="today"></h1>
-		<h1 class="nudge">day of the year</h1>
-	</div>
-	<div>
-		<p id="date"></p>
-		<div class="credits">
-			<p>
-				<a href="https://www.kylewjohnston.com">Credits</a> <a href="https://github.com/kylejohnston/today/">Code</a>
-			</p>
+	<div class="mainLayout">
+		<div>
+			<h1>today is the</h1>
+			<h1 id="today"></h1>
+			<h1 class="nudge">day of the year</h1>
+		</div>
+		<div>
+			<p id="date"></p>
+			<div class="credits">
+				<p>
+					<a href="https://www.kylewjohnston.com">Credits</a> <a href="https://github.com/kylejohnston/today/">Code</a>
+				</p>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
-
 <script>
-	const now = new Date();
-	// month argument 0 = January, day argument 0 = dec 31
-	const startOfYear = new Date(now.getFullYear(), 0, 0); 
-	// calculate the time difference between the current date and the start of the year
-	const diff = now - startOfYear + ((startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-	// calculates the number of days between two dates; formula:
-	// calculate milliseconds = seconds * minutes * hours
-	const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24)); 
-	// add the correct suffix to the day of the year
-	const suffix = (dayOfYear % 10 === 1 && dayOfYear % 100 !== 11) ? "st" : (dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) ? "nd" : (dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) ? "rd" : "th";
-	// get todays date
-	const month = now.toLocaleString('default', { month: 'short' });
-	const day = now.getDate();
-	const year = now.getFullYear();
-	// render on the page…
-	const dayElement = document.getElementById("today");
-	const dateElement = document.getElementById("date");
-	dayElement.innerHTML = `${dayOfYear}<small>${suffix}</small>`;
-	dateElement.innerHTML = `${year}-${month}-${day}`;
+	function calculateDayOfYear(targetDate) {
+		const year = targetDate.getFullYear();
+		const firstDayOfYear = new Date(year, 0, 1);
+		
+		const diffInMs = targetDate.getTime() - firstDayOfYear.getTime();
+		
+		const dayOfYear = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+		
+		return dayOfYear;
+	}
+	
+	function addSuffix(dayOfYear) {
+		return (dayOfYear % 10 === 1 && dayOfYear % 100 !== 11) ? "st" : 
+		(dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) ? "nd" : 
+		(dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) ? "rd" : 
+		"th";
+	}
+	
+	function getDateFromURL() {
+		const fullPath = window.location.pathname;
+		const dateRegex = /^\/(\d{4})-(\d{2})-(\d{2})$/;
+		const match = fullPath.match(dateRegex);
+		
+		if (match) {
+			const year = parseInt(match[1], 10);
+			const month = parseInt(match[2], 10) - 1;
+			const day = parseInt(match[3], 10);
+			
+			return new Date(year, month, day);
+		}
+		
+		return null;
+	}
+	
+	function displayDayOfYear(date) {
+		const dayOfYear = calculateDayOfYear(date);
+		const suffix = addSuffix(dayOfYear);
+		
+		const dayElement = document.getElementById("today");
+		const dateElement = document.getElementById("date");
+		
+		dayElement.innerHTML = `${dayOfYear}<small>${suffix}</small>`;
+		dateElement.innerHTML = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+	}
+	
+	document.addEventListener('DOMContentLoaded', () => {
+		const targetDate = getDateFromURL() || new Date();
+		displayDayOfYear(targetDate);
+	});
 </script>
 </html>
