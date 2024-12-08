@@ -124,7 +124,7 @@
 <body class="text-color">
 	<div class="mainLayout">
 		<div>
-			<h1>today is the</h1>
+			<h1 id="heading">today is the</h1>
 			<h1 id="today"></h1>
 			<h1 class="nudge">day of the year</h1>
 		</div>
@@ -152,9 +152,9 @@
 	
 	function addSuffix(dayOfYear) {
 		return (dayOfYear % 10 === 1 && dayOfYear % 100 !== 11) ? "st" : 
-		(dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) ? "nd" : 
-		(dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) ? "rd" : 
-		"th";
+			   (dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) ? "nd" : 
+			   (dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) ? "rd" : 
+			   "th";
 	}
 	
 	function getDateFromURL() {
@@ -174,19 +174,32 @@
 	}
 	
 	function displayDayOfYear(date) {
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);  // Reset time to start of day for accurate comparison
+		
 		const dayOfYear = calculateDayOfYear(date);
 		const suffix = addSuffix(dayOfYear);
 		
 		const dayElement = document.getElementById("today");
 		const dateElement = document.getElementById("date");
+		const headingElement = document.getElementById("heading");
 		
 		dayElement.innerHTML = `${dayOfYear}<small>${suffix}</small>`;
 		dateElement.innerHTML = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+		
+		// Determine heading based on date
+		if (window.location.pathname !== '/' && date < today) {
+			headingElement.textContent = "This was the";
+		} else if (window.location.pathname !== '/' && date > today) {
+			headingElement.textContent = "This will be the";
+		} else {
+			headingElement.textContent = "Today is the";
+		}
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => {
 		const targetDate = getDateFromURL() || new Date();
 		displayDayOfYear(targetDate);
 	});
-</script>
-</html>
+	</script>
+	</html>
