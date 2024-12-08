@@ -138,68 +138,48 @@
 		</div>
 	</div>
 </body>
+
 <script>
-	function calculateDayOfYear(targetDate) {
-		const year = targetDate.getFullYear();
-		const firstDayOfYear = new Date(year, 0, 1);
-		
-		const diffInMs = targetDate.getTime() - firstDayOfYear.getTime();
-		
-		const dayOfYear = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
-		
-		return dayOfYear;
+	function calculateDayOfYear(date) {
+		return Math.floor((date - new Date(date.getFullYear(), 0, 1)) / (24 * 60 * 60 * 1000)) + 1;
 	}
 	
-	function addSuffix(dayOfYear) {
-		return (dayOfYear % 10 === 1 && dayOfYear % 100 !== 11) ? "st" : 
-			   (dayOfYear % 10 === 2 && dayOfYear % 100 !== 12) ? "nd" : 
-			   (dayOfYear % 10 === 3 && dayOfYear % 100 !== 13) ? "rd" : 
-			   "th";
+	function addSuffix(n) {
+		const j = n % 10, k = n % 100;
+		return n + (j === 1 && k !== 11 ? "st" : j === 2 && k !== 12 ? "nd" : j === 3 && k !== 13 ? "rd" : "th");
 	}
 	
 	function getDateFromURL() {
-		const fullPath = window.location.pathname;
-		const dateRegex = /^\/(\d{4})-(\d{2})-(\d{2})$/;
-		const match = fullPath.match(dateRegex);
-		
-		if (match) {
-			const year = parseInt(match[1], 10);
-			const month = parseInt(match[2], 10) - 1;
-			const day = parseInt(match[3], 10);
-			
-			return new Date(year, month, day);
-		}
-		
-		return null;
+		const match = /^\/(\d{4})-(\d{2})-(\d{2})$/.exec(window.location.pathname);
+		return match 
+			? new Date(+match[1], +match[2] - 1, +match[3])
+			: null;
 	}
 	
 	function displayDayOfYear(date) {
 		const today = new Date();
-		today.setHours(0, 0, 0, 0);  // Reset time to start of day for accurate comparison
+		today.setHours(0, 0, 0, 0);
 		
 		const dayOfYear = calculateDayOfYear(date);
-		const suffix = addSuffix(dayOfYear);
+		const suffixedDay = addSuffix(dayOfYear);
 		
-		const dayElement = document.getElementById("today");
-		const dateElement = document.getElementById("date");
+		document.getElementById("today").innerHTML = 
+			`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
+		
+		document.getElementById("date").textContent = date.toISOString().split('T')[0];
+		
 		const headingElement = document.getElementById("heading");
-		
-		dayElement.innerHTML = `${dayOfYear}<small>${suffix}</small>`;
-		dateElement.innerHTML = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-		
-		// Determine heading based on date
-		if (window.location.pathname !== '/' && date < today) {
-			headingElement.textContent = "This was the";
-		} else if (window.location.pathname !== '/' && date > today) {
-			headingElement.textContent = "This will be the";
-		} else {
-			headingElement.textContent = "Today is the";
-		}
+		headingElement.textContent = window.location.pathname === '/' 
+			? "Today is the"
+			: date < today 
+				? "This was the"
+				: date > today 
+					? "This will be the"
+					: "Today is the";
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => {
-		const targetDate = getDateFromURL() || new Date();
-		displayDayOfYear(targetDate);
+		displayDayOfYear(getDateFromURL() || new Date());
 	});
 	</script>
-	</html>
+</html>
