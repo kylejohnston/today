@@ -152,8 +152,8 @@
 	function getDateFromURL() {
 		const match = /^\/(\d{4})-(\d{2})-(\d{2})$/.exec(window.location.pathname);
 		return match 
-			? new Date(+match[1], +match[2] - 1, +match[3])
-			: null;
+		? new Date(+match[1], +match[2] - 1, +match[3])
+		: null;
 	}
 	
 	function displayDayOfYear(date) {
@@ -164,22 +164,22 @@
 		const suffixedDay = addSuffix(dayOfYear);
 		
 		document.getElementById("today").innerHTML = 
-			`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
+		`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
 		
 		document.getElementById("date").textContent = date.toISOString().split('T')[0];
 		
 		const headingElement = document.getElementById("heading");
 		headingElement.textContent = window.location.pathname === '/' 
-			? "Today is the"
-			: date < today 
-				? "This was the"
-				: date > today 
-					? "This will be the"
-					: "Today is the";
+		? "Today is the"
+		: date < today 
+		? "This was the"
+		: date > today 
+		? "This will be the"
+		: "Today is the";
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => {
 		displayDayOfYear(getDateFromURL() || new Date());
 	});
-	</script>
+</script>
 </html>
