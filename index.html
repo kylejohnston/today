@@ -48,8 +48,9 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+			--year-progress: 50%;
 			background:
-			linear-gradient(180deg, #CCCCFF 45%, rgba(204, 204, 255, 0) 100%), #FF944D;
+			linear-gradient(180deg, var(--purple-base) var(--year-progress), var(--orange-base) 100%), #FF944D;
 			height: 100dvh;
 		}
 		main {
@@ -66,7 +67,7 @@
 				width: calc(100vw - 2rem);
 				max-width: 400px;
 				aspect-ratio: 4 / 5;
-				background: radial-gradient(81.41% 40.56% at 50% 83.53%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFF9F5;
+				background: var(--orange-050);
 				box-shadow: 0px 0px 16px rgba(36, 36, 36, 0.64);
 				border-radius: 16px;
 				position: relative;
@@ -126,9 +127,12 @@
 			margin: 1.5rem 0;
 			line-height: 1;
 		}
-		footer p {
-			margin: 0;
-			line-height: 85%;;
+		footer #date:link, footer #date:visited {
+			color: var(--text-color);
+			text-decoration: none;
+		}
+		footer #date:hover, footer #date:active {
+			text-decoration: underline;
 		}
 		footer .credits {
 			margin: 1rem -0.875rem;
@@ -146,6 +150,7 @@
 			padding: 12px 16px 9px 16px;
 			text-decoration: none; 
 			border-radius: 999px;
+			transition: ease-in-out .2s;
 		}
 		.credits a:hover, .credits a:active {
 			color: var(--orange-base);
@@ -167,17 +172,27 @@
 		</div>
 	</main>
 	<footer>
-		<p id="date"></p>
+		<p><a href="" id="date"></a></p>
 		<div class="credits">
 			<p><a href="https://kyleio.com">by kyle</a></p> · 
-			<p><a href="https://github.com/kylejohnston/today/">code</a></p>
+			<p><a href="https://github.com/kylejohnston/today/">code</a></p> · 
+			<p><a href="/">t000.day</a></p>
 		</div>
 	</footer>
 </body>
 
 <script>
 	function calculateDayOfYear(date) {
-		return Math.floor((date - new Date(date.getFullYear(), 0, 1)) / (24 * 60 * 60 * 1000)) + 1;
+		// Get the date in YYYY-MM-DD format
+		const dateString = date.toISOString().split('T')[0];
+		const startOfYear = `${date.getFullYear()}-01-01`;
+		
+		// Create new Date objects using the ISO strings
+		const currentDate = new Date(dateString);
+		const yearStart = new Date(startOfYear);
+		
+		// Calculate the difference in days
+		return Math.floor((currentDate - yearStart) / (24 * 60 * 60 * 1000)) + 1;
 	}
 	
 	function addSuffix(n) {
@@ -187,22 +202,33 @@
 	
 	function getDateFromURL() {
 		const match = /^\/(\d{4})-(\d{2})-(\d{2})$/.exec(window.location.pathname);
-		return match 
-		? new Date(+match[1], +match[2] - 1, +match[3])
-		: null;
+		if (!match) return null;
+		
+		// Create the date directly from the YYYY-MM-DD format
+		return new Date(`${match[1]}-${match[2]}-${match[3]}T12:00:00Z`);
 	}
 	
 	function displayDayOfYear(date) {
-		const today = new Date();
-		today.setHours(0, 0, 0, 0);
+		const today = new Date((new Date()).toISOString().split('T')[0] + 'T12:00:00Z');
 		
 		const dayOfYear = calculateDayOfYear(date);
 		const suffixedDay = addSuffix(dayOfYear);
 		
+		// Calculate the percentage of the year completed
+		const isLeapYear = new Date(date.getFullYear(), 1, 29).getMonth() === 1;
+		const daysInYear = isLeapYear ? 366 : 365;
+		const yearProgress = (dayOfYear / daysInYear * 72).toFixed(1);
+		
+		// Update the CSS custom property
+		document.body.style.setProperty('--year-progress', `${yearProgress}%`);
+		
 		document.getElementById("today").innerHTML = 
 		`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
 		
-		document.getElementById("date").textContent = date.toISOString().split('T')[0];
+		const dateElement = document.getElementById("date");
+		const formattedDate = date.toISOString().split('T')[0];
+		dateElement.textContent = formattedDate;
+		dateElement.href = `/${formattedDate}`;
 		
 		const headingElement = document.getElementById("heading");
 		headingElement.textContent = window.location.pathname === '/' 
