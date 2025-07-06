@@ -22,23 +22,16 @@
 			url('fonts/Akkurat-Regular.svg#AkkuratRegular') format('svg');
 		}
 		:root {
-			--orange-50:  #fff4ec;
-			--orange-100: #ffe7d3;
-			--orange-200: #ffcaa5;
-			--orange-300: #ffa56d;
-			--orange-400: #ff7432;
-			--orange-500: #ff4e0a;
-			--orange-600: #ff3300;
-			--orange-700: #cc2002;
-			--orange-800: #a11b0b;
-			--orange-900: #82190c;
-			--orange-950: #460904;
+			--text-color:  #121212;
+			--orange-base: #FF944D;
+			--orange-050:  #FFF9F5;
+			--purple-base: #CCCCFF;
 			
-			--text: 'Akkurat', Georgia, sans-serif;
-			--mono: 'Akkurat Mono', Georgia, sans-serif;
+			--text: 'Akkurat', Helvetica, Arial, sans-serif;
+			--mono: 'Akkurat Mono', 'Courier New', Courier, monospace;
 			--text-weight: 500;
 			
-			--font-size: 6vw;
+			--font-size: 1.5rem;
 		}
 		*, *::before, *::after {
 			box-sizing: border-box;
@@ -47,96 +40,139 @@
 			margin: 0;
 			padding:0;
 			font-family: var(--text);
-			background:
-			linear-gradient(130deg, var(--orange-50), var(--orange-200));
 		}
 		body {
-			margin: 2rem 0;
-			padding: 0;
-			text-align: center;
+			margin: 0;
+			padding: 1rem;
+			text-align: left;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			background:
+			linear-gradient(180deg, #CCCCFF 45%, rgba(204, 204, 255, 0) 100%), #FF944D;
+			height: 100dvh;
 		}
-		.mainLayout {
+		main {
 			display: flex;
 			flex-direction: column;
 			justify-content:space-between;
-			height: calc(100dvh - 2em); /* account for the margin */
 		}
-		a:link, a:visited { color: var(--orange-400); border: 1px solid var(--orange-400); padding: .7rem 1rem .5rem 1rem; text-decoration:none; border-radius:999px; }
-		a:hover, a:active { color: var(--orange-200); border-color: #00F; background: #00f; }
-		.text-color { color: var(--orange-600); }
-		.credits {
-			padding:2rem 0;
-		}
-		h1 { 
-			/* today is the… day of the year */
-			margin: 0;
-			line-height: 1;
-			text-transform: uppercase;
-			font-family: var(--text);
-			font-weight: var(--text-weight);
-			font-size:   var(--font-size);
-		}
-		#today { 
-			margin: 0;
-			line-height: 1;
-			font-family: var(--mono);
-			font-weight: var(--text-weight);
-			font-size: 40vmin;
-			letter-spacing: -1rem;
-			display: flex;
-			grid-gap: 1rem;
-			justify-content: center;
-			align-items: center;
-		}
-		small { 
-			position: relative;
-			top: -1rem;
-			margin-left: 3px;
-			font-size: 18vmin;
-			letter-spacing: 0;
-		}
-		.nudge { 
-			position: relative;
-			top: -0.44em;
-		}
-		p {
-			margin: 0;
-			line-height: 1;
-			font-size: 1rem;
-			text-transform: uppercase;
-			color: var(--orange-500);
-			font-family: var(--text);
-			font-weight: var(--text-weight);
-		}
-		@media (width<=768px) {
-			/* mobile styles */
-			p#date { margin-top: 3rem; }
-			#today {
-				font-size: 42vmin;
-			}
-			.nudge { 
+			.dateCard {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				margin: 0 auto;
+				padding: 2rem;
+				width: calc(100vw - 2rem);
+				max-width: 400px;
+				aspect-ratio: 4 / 5;
+				background: radial-gradient(81.41% 40.56% at 50% 83.53%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FFF9F5;
+				box-shadow: 0px 0px 16px rgba(36, 36, 36, 0.64);
+				border-radius: 16px;
 				position: relative;
-				top: -0.94em;
+			}
+			.dateCard::after {
+				content: '';
+				position: absolute;
+				top: 1rem;
+				left: 0.5rem;
+				width: calc(100vw - 3rem);
+				max-width: calc(400px - 1rem);
+				height: 100%;
+				border-radius: inherit;
+				background: var(--text-color);
+				mix-blend-mode: soft-light;
+				pointer-events: none;
+				z-index: -1;
+			}
+			h1 { 
+				/* today is the… day of the year */
+				margin: 0;
+				line-height: 1;
+				font-family: var(--text);
+				font-weight: var(--text-weight);
+				font-size:   var(--font-size);
+			}
+			#heading {
+				margin-bottom: 1.5rem;
+			}
+			#today { 
+				margin: 0 0 0 -8px;
+				line-height: 85%;
+				font-family: var(--mono);
+				font-weight: var(--text-weight);
+				font-size: 10rem;
+				letter-spacing: -1rem;
+				display: flex;
+				grid-gap: 1rem;
+				justify-content: left;
+				align-items: center;
+			}
+			small { 
+				position: relative;
+				top: -1rem;
+				margin-left: -4px;
+				font-size: 3rem;
+				letter-spacing: 0;
+			}
+		footer {
+			margin: 0 auto;
+			padding: 0 2rem;
+			width: calc(100vw - 2rem);
+			max-width: 400px;
+		}
+		footer #date {
+			font-size: 1.5rem;
+			margin: 1.5rem 0;
+			line-height: 1;
+		}
+		footer p {
+			margin: 0;
+			line-height: 85%;;
+		}
+		footer .credits {
+			margin: 1rem -0.875rem;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 1rem;
+			color: var(--text-color);
+		}
+		.credits a:link, .credits a:visited {
+			margin: 0;
+			line-height: 85%;
+			color: var(--text-color);
+			border: 1px solid var(--text-color);
+			padding: 12px 16px 9px 16px;
+			text-decoration: none; 
+			border-radius: 999px;
+		}
+		.credits a:hover, .credits a:active {
+			color: var(--orange-base);
+			background: var(--text-color);
+		}
+		@media (width<=390px) {
+			#today { 
+				font-size: 8rem;
 			}
 		}
 	</style>
 </head>
 <body class="text-color">
-	<div class="mainLayout">
-		<div>
+	<main class="mainLayout">
+		<div class="dateCard">
 			<h1 id="heading">today is the</h1>
 			<h1 id="today"></h1>
 			<h1 class="nudge">day of the year</h1>
 		</div>
-		<div>
-			<p id="date"></p>
-			<div class="credits">
-				<p>
-					<a href="https://www.kylewjohnston.com">Credits</a> <a href="https://github.com/kylejohnston/today/">Code</a>
-				</p>
-			</div>
+	</main>
+	<footer>
+		<p id="date"></p>
+		<div class="credits">
+			<p><a href="https://kyleio.com">by kyle</a></p> · 
+			<p><a href="https://github.com/kylejohnston/today/">code</a></p>
 		</div>
-	</div>
+	</footer>
 </body>
 
 <script>
