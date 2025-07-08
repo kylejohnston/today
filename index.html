@@ -182,16 +182,19 @@
 </body>
 
 <script>
+	const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+
 	function calculateDayOfYear(date) {
 		// Use UTC to avoid timezone issues
 		const year = date.getFullYear();
 		const startOfYear = Date.UTC(year, 0, 1);
 		const targetDate = Date.UTC(year, date.getMonth(), date.getDate());
-		return Math.floor((targetDate - startOfYear) / 86400000) + 1;
+		return Math.floor((targetDate - startOfYear) / MILLISECONDS_PER_DAY) + 1;
 	}
 	
 	function addSuffix(day) {
-		const lastDigit = day % 10, lastTwoDigits = day % 100;
+		const lastDigit = day % 10;
+		const lastTwoDigits = day % 100;
 		return day + (lastDigit === 1 && lastTwoDigits !== 11 ? "st" : lastDigit === 2 && lastTwoDigits !== 12 ? "nd" : lastDigit === 3 && lastTwoDigits !== 13 ? "rd" : "th");
 	}
 	
