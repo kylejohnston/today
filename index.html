@@ -183,10 +183,6 @@
 
 <script>
 	function calculateDayOfYear(date) {
-		// Use the local timezone for start of year
-		const startOfYear = new Date(date.getFullYear(), 0, 1);
-		const diff = date - startOfYear;
-		return Math.floor(diff / 86400000) + 1;
 		// Use UTC to avoid timezone issues
 		const year = date.getFullYear();
 		const startOfYear = Date.UTC(year, 0, 1);
@@ -194,6 +190,9 @@
 		return Math.floor((targetDate - startOfYear) / 86400000) + 1;
 	}
 	
+	function addSuffix(day) {
+		const lastDigit = day % 10, lastTwoDigits = day % 100;
+		return day + (lastDigit === 1 && lastTwoDigits !== 11 ? "st" : lastDigit === 2 && lastTwoDigits !== 12 ? "nd" : lastDigit === 3 && lastTwoDigits !== 13 ? "rd" : "th");
 	}
 	
 	function formatDate(date) {
@@ -208,38 +207,56 @@
 		return new Date(+match[1], +match[2] - 1, +match[3]);
 	}
 	
-	function displayDayOfYear(date) {
-		// Create today's date at start of day in local timezone
+	function calculateDateInfo(date) {
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 		
 		const dayOfYear = calculateDayOfYear(date);
 		const suffixedDay = addSuffix(dayOfYear);
 		
-		// Calculate the percentage of the year completed
-		const isLeapYear = new Date(date.getFullYear(), 1, 29).getMonth() === 1;
+		const year = date.getFullYear();
+		const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 		const daysInYear = isLeapYear ? 366 : 365;
 		const yearProgress = (dayOfYear / daysInYear * 72).toFixed(1);
 		
-		// Update the CSS custom property
-		document.body.style.setProperty('--year-progress', `${yearProgress}%`);
-		
-		document.getElementById("today").innerHTML = 
-		`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
-		
-		const dateElement = document.getElementById("date");
 		const formattedDate = formatDate(date);
-		dateElement.textContent = formattedDate;
-		dateElement.href = `/${formattedDate}`;
+		const headingText = window.location.pathname === '/' 
+			? "Today is the"
+			: date < today
+			? "This was the"
+			: date > today
+			? "This will be the"
+			: "Today is the";
+			
+		return {
+			dayOfYear,
+			suffixedDay,
+			yearProgress,
+			formattedDate,
+			headingText
+		};
+	}
+	
+	function updateDOM(dateInfo) {
+		// Update gradient
+		document.body.style.setProperty('--year-progress', `${dateInfo.yearProgress}%`);
 		
-		const headingElement = document.getElementById("heading");
-		headingElement.textContent = window.location.pathname === '/' 
-		? "Today is the"
-		: date < today
-		? "This was the"
-		: date > today
-		? "This will be the"
-		: "Today is the";
+		// Update day number and suffix
+		document.getElementById("today").innerHTML = 
+			`${dateInfo.dayOfYear}<small>${dateInfo.suffixedDay.slice(String(dateInfo.dayOfYear).length)}</small>`;
+		
+		// Update date link
+		const dateElement = document.getElementById("date");
+		dateElement.textContent = dateInfo.formattedDate;
+		dateElement.href = `/${dateInfo.formattedDate}`;
+		
+		// Update heading
+		document.getElementById("heading").textContent = dateInfo.headingText;
+	}
+	
+	function displayDayOfYear(date) {
+		const dateInfo = calculateDateInfo(date);
+		updateDOM(dateInfo);
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => {
