@@ -183,16 +183,10 @@
 
 <script>
 	function calculateDayOfYear(date) {
-		// Get the date in YYYY-MM-DD format
-		const dateString = date.toISOString().split('T')[0];
-		const startOfYear = `${date.getFullYear()}-01-01`;
-		
-		// Create new Date objects using the ISO strings
-		const currentDate = new Date(dateString);
-		const yearStart = new Date(startOfYear);
-		
-		// Calculate the difference in days
-		return Math.floor((currentDate - yearStart) / (24 * 60 * 60 * 1000)) + 1;
+		// Use the local timezone for start of year
+		const startOfYear = new Date(date.getFullYear(), 0, 1);
+		const diff = date - startOfYear;
+		return Math.floor(diff / 86400000) + 1;
 	}
 	
 	function addSuffix(n) {
@@ -200,16 +194,22 @@
 		return n + (j === 1 && k !== 11 ? "st" : j === 2 && k !== 12 ? "nd" : j === 3 && k !== 13 ? "rd" : "th");
 	}
 	
+	function formatDate(date) {
+		return date.toLocaleDateString('en-CA'); // en-CA gives us YYYY-MM-DD format
+	}
+	
 	function getDateFromURL() {
 		const match = /^\/(\d{4})-(\d{2})-(\d{2})$/.exec(window.location.pathname);
 		if (!match) return null;
 		
-		// Create the date directly from the YYYY-MM-DD format
-		return new Date(`${match[1]}-${match[2]}-${match[3]}T12:00:00Z`);
+		// Create date in local timezone
+		return new Date(+match[1], +match[2] - 1, +match[3]);
 	}
 	
 	function displayDayOfYear(date) {
-		const today = new Date((new Date()).toISOString().split('T')[0] + 'T12:00:00Z');
+		// Create today's date at start of day in local timezone
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
 		
 		const dayOfYear = calculateDayOfYear(date);
 		const suffixedDay = addSuffix(dayOfYear);
@@ -226,16 +226,16 @@
 		`${dayOfYear}<small>${suffixedDay.slice(String(dayOfYear).length)}</small>`;
 		
 		const dateElement = document.getElementById("date");
-		const formattedDate = date.toISOString().split('T')[0];
+		const formattedDate = formatDate(date);
 		dateElement.textContent = formattedDate;
 		dateElement.href = `/${formattedDate}`;
 		
 		const headingElement = document.getElementById("heading");
 		headingElement.textContent = window.location.pathname === '/' 
 		? "Today is the"
-		: date < today 
+		: date < today
 		? "This was the"
-		: date > today 
+		: date > today
 		? "This will be the"
 		: "Today is the";
 	}
